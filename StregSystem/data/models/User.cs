@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.FileIO;
 
 namespace StregSystem.data.models
 {
     class User : IComparable<User>
     {
         private int _ID;
-        private List<string> _firstName;
+        private List<string> _firstName = new List<string>();
         private string _lastName;
         private string _userName;
         private string _email;
         private double _balance;
+
+        public User(List<string> Name, string userName, string email)
+        {
+            setUserName(userName);
+            setName(Name);
+            setEmail(email);
+            setID();
+        }
 
         public int ID { get; private set; }
         public List<string> FirstName { get; private set; }
@@ -24,12 +34,35 @@ namespace StregSystem.data.models
         public double Balance { get; private set; }
         private void setID()
         {
-            //Open CSV with current members, read last member number + Add one
-            //To that, save as ID
+            string path = "../../../files/userID.csv";
+            string id = "0";
+            using (TextFieldParser parser = new TextFieldParser(path))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+                while (!parser.EndOfData)
+                {
+                    //Processing row
+                    id = parser.ReadLine();
+                }
+            }
+            if(id == "0")
+            {
+                _ID = 1;
+            }
+            else
+            {
+                int lastID = Int32.Parse(id);
+                _ID = ++lastID;
+            }
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(_ID);
+            }
         } 
         private void setUserName(string UserNameInp)
         {
-            if(Regex.IsMatch(UserNameInp, @"^[A-Za-z0-9_]$"))
+            if(Regex.IsMatch(UserNameInp, @"^[A-Za-z0-9_]+$"))
             {
                 _userName = UserNameInp;
                 UserName = _userName;
@@ -41,7 +74,7 @@ namespace StregSystem.data.models
         }
         public void setEmail(string EmailSet)
         {
-            if(Regex.IsMatch(EmailSet, @"^[A-Za-z0-9._%+-]+@[^-.][A-Za-z0-9]{1}[A-Za-z0-9.-]+[^-.][A-Za-z0-9]{1}\.[A-Za-z0-9]{2,4}$ "))
+            if(Regex.IsMatch(EmailSet, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
             {
                 _email = EmailSet;
                 Email = _email;
@@ -59,7 +92,7 @@ namespace StregSystem.data.models
             {
                 if (Name[i] != "" && Regex.IsMatch(Name[i], @"^[a-zA-Z]+$"))
                 {
-                    _firstName.Add(Name[^1]);
+                    _firstName.Add(Name[i]);
                     HasAName = true;
                 }
             }
