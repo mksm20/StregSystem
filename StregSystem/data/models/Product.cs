@@ -28,16 +28,15 @@ namespace StregSystem.data.models
             return ObjparamsString;
         }
         public void priceChange(double newPrice)
-        {
-            if (newPrice > 0)
-            {
-                this.Price = newPrice;
-            }
-            else
-            {
-                throw new ArgumentException("Price cannot be less than 0");
-            }
+        {        
+                if (newPrice > 0)
+                {
+                    this.Price = newPrice;
+                }
+                else
+                {
+                    throw new ArgumentException("Price cannot be less than 0");
+                }
         }
-
     }
 }

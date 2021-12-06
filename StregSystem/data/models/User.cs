@@ -142,7 +142,7 @@ namespace StregSystem.data.models
                 }
                 else
                 {
-                    throw new ArgumentException("Outgoing transaction cannot be negative or 0 :");
+                    throw new InsufficientCreditsException("Outgoing transaction cannot be negative or 0 :");
                 }
 
             }
