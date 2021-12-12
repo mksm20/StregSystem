@@ -19,15 +19,15 @@ namespace StregSystem.data.models
         public Product product { get; set; }
         public override void Execute()
         {
-            try
+            if (User.Balance > Amount)
             {
                 User.setOutBalance(Amount);
                 setID();
-            }catch(InsufficientCreditsException e)
-            {
-                //do something
             }
-
+            else
+            {
+                throw new InsufficientCreditsException();
+            }
         }
         public override void setID()
         {

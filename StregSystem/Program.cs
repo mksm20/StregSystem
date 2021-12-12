@@ -21,3 +21,5 @@ namespace StregSystem
         }
     }
 }
+
+// Add collection of products and users hashcodes

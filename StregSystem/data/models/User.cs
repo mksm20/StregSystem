@@ -9,7 +9,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace StregSystem.data.models
 {
-    class User : IComparable<User>
+    public class User : IComparable<User>
     {
         private int _ID;
         private List<string> _firstName = new List<string>();
@@ -24,6 +24,7 @@ namespace StregSystem.data.models
             setName(Name);
             setEmail(email);
             setID();
+            OnNewUser();
         }
 
         public int ID { get; private set; }
@@ -32,6 +33,18 @@ namespace StregSystem.data.models
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public double Balance { get; private set; }
+        public delegate void NewUserAddedEventHandler(object source, UserArgs args);
+        public delegate void BalanceLowEventHandler(object source, UserArgs args);
+        public event BalanceLowEventHandler LowBalance;
+        public event NewUserAddedEventHandler NewUser;
+        protected virtual void OnNewUser()
+        {
+            if (NewUser != null) NewUser(this, new UserArgs() { user = this });
+        }
+        protected virtual void OnLowBalance()
+        {
+            if (LowBalance != null) LowBalance(this, new UserArgs() { user = this });
+        }
         private void setID()
         {
             string path = "../../../files/userID.csv";
@@ -133,7 +146,10 @@ namespace StregSystem.data.models
         public void setOutBalance(double OutTransAct)
         {
             {
-
+                if(Balance < 50)
+                {
+                    OnLowBalance();
+                }
 
                 if (OutTransAct > 0 && OutTransAct <= Balance)
                 {
@@ -155,5 +171,39 @@ namespace StregSystem.data.models
             return 1;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is User user &&
+                   _ID == user._ID &&
+                   EqualityComparer<List<string>>.Default.Equals(_firstName, user._firstName) &&
+                   _lastName == user._lastName &&
+                   _userName == user._userName &&
+                   _email == user._email &&
+                   _balance == user._balance &&
+                   ID == user.ID &&
+                   EqualityComparer<List<string>>.Default.Equals(FirstName, user.FirstName) &&
+                   UserName == user.UserName &&
+                   LastName == user.LastName &&
+                   Email == user.Email &&
+                   Balance == user.Balance;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(_ID);
+            hash.Add(_firstName);
+            hash.Add(_lastName);
+            hash.Add(_userName);
+            hash.Add(_email);
+            hash.Add(_balance);
+            hash.Add(ID);
+            hash.Add(FirstName);
+            hash.Add(UserName);
+            hash.Add(LastName);
+            hash.Add(Email);
+            hash.Add(Balance);
+            return hash.ToHashCode();
+        }
     }
 }
