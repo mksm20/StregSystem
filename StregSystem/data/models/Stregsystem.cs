@@ -13,6 +13,7 @@ namespace StregSystem.data.models
         {
             Users = new UserList();
             Products = new ProductList();
+            Transactions = new TransactionList();
             InitiateStregsystem();
             GetActiveProducts();
         }
@@ -20,7 +21,15 @@ namespace StregSystem.data.models
         private string _path = "../../../files/users.Json";
         public UserList Users { get; set; }
         public ProductList Products { get; set; }
+        public TransactionList Transactions { get; set; }
         public IEnumerable<Product> ActiveProducts { get; private set; }
+        public delegate void BalanceLowEventHandler(object source, UserArgs args);
+        public event BalanceLowEventHandler LowBalance;
+
+        protected virtual void OnLowBalanceStreg(User e)
+        {
+            if (LowBalance != null) LowBalance(this, new UserArgs() { user = e });
+        }
         public void UpdateUsers()
         {
             using (StreamWriter w = new StreamWriter(_path))
@@ -85,13 +94,14 @@ namespace StregSystem.data.models
         }
         public void OnLowBalance(object source, UserArgs e)
         {
-            throw new LowBalanceException($"You balance is {e.user.Balance} please consider refilling");
+            OnLowBalanceStreg(e.user);
         }
-        public BuyTransaction BuyProduct(User user, Product product)
+        public void BuyProduct(User user, Product product)
         {
             BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product);
-            user.transactions.Add(transaction);
-            return transaction;
+            user.buyTransactions.Add(transaction);
+            Transactions.Transactions.Add(transaction);
+            Transactions.addTransactions();
         }
         public InsertCashTransaction AddCreditsToAccount(string username, double amount)
         {

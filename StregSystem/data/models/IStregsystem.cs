@@ -13,7 +13,7 @@ namespace StregSystem.data.models
             IEnumerable<Product> ActiveProducts { get; }
             void InitiateStregsystem();
             InsertCashTransaction AddCreditsToAccount(string username, double amount);
-            BuyTransaction BuyProduct(User user, Product product);
+            void BuyProduct(User user, Product product);
             Product GetProductByID(int id);
             IEnumerable<Transaction> GetTransactions(User user, int count);
             User GetUsers(Func<User, bool> predicate);

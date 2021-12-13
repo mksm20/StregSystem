@@ -16,6 +16,7 @@ namespace StregSystem.data.Controller
             _stregsystem = stregSystem;
             _ui = ui;
             _ui.CommandParse += OnCommandParse;
+            _stregsystem.LowBalance += OnLowBalance;
             initiateController();
         }
         private Dictionary<string, Delegate> adminCommands = new Dictionary<string, Delegate>();
@@ -29,6 +30,10 @@ namespace StregSystem.data.Controller
             adminCommands[":crediton"] = new Action<int>(_stregsystem.CreditOnOff);
             adminCommands[":creditoff"] = new Action<int>(_stregsystem.CreditOnOff);
             adminCommands[":addcredits"] = new Func<string, double,Transaction>(_stregsystem.AddCreditsToAccount);
+        }
+        public void OnLowBalance(object source, UserArgs e)
+        {
+            _ui.DisplayLowCredit($"{e.user.UserName} your balance is {e.user.Balance}, please consider refilling");
         }
         public void OnCommandParse(object source, CommandArgs e)
         {
@@ -62,38 +67,41 @@ namespace StregSystem.data.Controller
                         break;
                 }
             }
-            else
             {
                 
                 try
                 {
                     User user = _stregsystem.GetUserByUsername(commandArr[0]);
+                    if (commandArr.Length == 1)
+                    {
+                        _ui.DisplayUserInfo(user);
+                    }
                     for (int i = 1; i < commandArr.Length; i++)
                     {
-                        if (commandArr.Length == 1)
-                        {
-                            _ui.DisplayUserInfo(user);
-                        }
-                        else
-                        {
+
+                       try
+                       {
+                            Product temp = _stregsystem.GetProductByID(int.Parse(commandArr[i]));
                             try
                             {
-                                Product temp = _stregsystem.GetProductByID(int.Parse(commandArr[i]));
-                                try
-                                {
-                                    _stregsystem.BuyProduct(user, temp);
-                                }
-                                catch (InsufficientCreditsException)
-                                {
-                                    _ui.DisplayInsufficientCash(user, temp);
-                                }
+                                _stregsystem.BuyProduct(user, temp);
+                                _ui.DisplayUserBuysProduct(user.buyTransactions[^1]);
                             }
-                            catch (IndexOutOfRangeException) 
+                            catch (InsufficientCreditsException)
                             {
-                                _ui.DisplayProductNotFound(commandArr[i]);
+                                _ui.DisplayInsufficientCash(user, temp);
                             }
-                        }
+                       }
+                       catch (IndexOutOfRangeException) 
+                       {
+                           _ui.DisplayProductNotFound(commandArr[i]);
+                       }
+                       catch (System.FormatException e)
+                       {
+                            _ui.DisplayGeneralError("Your formatting was incorrect");
+                       }
                     }
+                    
                 }
                 catch (IndexOutOfRangeException)
                 {

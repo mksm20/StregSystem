@@ -10,6 +10,7 @@ namespace StregSystem.data.models
 {
     public abstract class Transaction
     {
+        public Transaction() { }
         public Transaction(User user, DateTime timeStamp, double amount)
         {
             User = user;

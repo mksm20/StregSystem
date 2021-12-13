@@ -26,6 +26,10 @@ namespace StregSystem.data.views
         {
             Console.WriteLine($"{username} does not exist \n");
         }
+        public void DisplayLowCredit(string lowCredit)
+        {
+            Console.WriteLine(lowCredit);
+        }
         public void DisplayProductNotFound(string product)
         {
             Console.WriteLine($"{product} does not exist \n");
@@ -69,19 +73,24 @@ namespace StregSystem.data.views
         {
             Console.WriteLine($"There was an error: {errorString} ");
         }
-        public void Start()
+        public void PrintProductList()
         {
             Console.WriteLine("Product List: \n");
             foreach (Product product in stregsystem.ActiveProducts)
             {
                 Console.WriteLine(product.ToString());
             }
+        }
+        public void Start()
+        {
+            PrintProductList();
             while (_isStarted)
             {
                 _command = Console.ReadLine();
                 if(_command != null)
                 {
                     OnCommandParse(_command);
+                    PrintProductList();
                 }
             }
         }

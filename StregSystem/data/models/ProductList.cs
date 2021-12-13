@@ -41,6 +41,7 @@ namespace StregSystem.data.models
                 }
             }
         }
+
         public IEnumerator<Product> GetEnumerator()
         {
             return new ProductEnumerator(this);

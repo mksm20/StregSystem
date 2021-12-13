@@ -50,6 +50,7 @@ namespace StregSystem.data.models
         public string Email { get; private set; }
         public double Balance { get; private set; }
         public List<Transaction> transactions = new List<Transaction>();
+        public List<BuyTransaction> buyTransactions = new List<BuyTransaction>();
         public delegate void BalanceLowEventHandler(object source, UserArgs args);
         public event BalanceLowEventHandler LowBalance;
         
