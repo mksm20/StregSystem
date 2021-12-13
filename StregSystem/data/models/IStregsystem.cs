@@ -12,7 +12,7 @@ namespace StregSystem.data.models
             UserList Users { get; set; } 
             IEnumerable<Product> ActiveProducts { get; }
             void InitiateStregsystem();
-            InsertCashTransaction AddCreditsToAccount(User user, double amount);
+            InsertCashTransaction AddCreditsToAccount(string username, double amount);
             BuyTransaction BuyProduct(User user, Product product);
             Product GetProductByID(int id);
             IEnumerable<Transaction> GetTransactions(User user, int count);

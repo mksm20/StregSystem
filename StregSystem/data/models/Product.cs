@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    public class Product : IComparable<Product>
+    public class Product : IComparable<int>
     {
         public Product(int iD, string name, double price, bool active, bool canBeBoughtOnCredit)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,26 @@ namespace StregSystem.data.models
             InitiateStregsystem();
             GetActiveProducts();
         }
-            
+
+        private string _path = "../../../files/users.Json";
         public UserList Users { get; set; }
         public ProductList Products { get; set; }
         public IEnumerable<Product> ActiveProducts { get; private set; }
+        public void UpdateUsers()
+        {
+            using (StreamWriter w = new StreamWriter(_path))
+            {
+                string json = "[";
+                foreach (User user in Users.users)
+                {
+                    json += System.Text.Json.JsonSerializer.Serialize(user);
+                    json += ",";
+                }
+                json += "]";
+                w.Write(json);
+            }
+
+        }
         public void CreditOnOff(int id)
         {
             foreach (Product product in Products.Products)
@@ -119,7 +136,6 @@ namespace StregSystem.data.models
         {
             List<string> navn = new List<string> { "Lars" };
             User users = new User(null, navn[0], "hans", "userName23", "bent@lasrt.dk", 3000);
-
             return users;
         }
     }

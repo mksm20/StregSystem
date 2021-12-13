@@ -2,6 +2,7 @@
 using StregSystem.data.views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,8 +36,55 @@ namespace StregSystem.data.Controller
         }
         public void CommandParser(string command)
         {
-
-            Console.WriteLine(command);
+            string[] commandArr = command.Split(" ");
+            if (commandArr[0].StartsWith(":"))
+            {
+                switch (commandArr[0])
+                {
+                    case ":quit":
+                        _ui.Close();
+                        break;
+                    case ":activate":
+                        _stregsystem.ActivateProduct(int.Parse(commandArr[1]));
+                        break;
+                    case ":deactivate":
+                        _stregsystem.DeactivateProduct(int.Parse(commandArr[1]));
+                        break;
+                    case ":crediton":
+                    case ":credioff":
+                        _stregsystem.CreditOnOff(int.Parse(commandArr[1]));
+                        break;
+                    case ":addcredits":
+                        _stregsystem.AddCreditsToAccount(commandArr[1], double.Parse(commandArr[2]));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                
+                try
+                {
+                    User user = _stregsystem.GetUserByUsername(commandArr[0]);
+                    for (int i = 1; i < commandArr.Length; i++)
+                    {
+                        if (commandArr.Length == 1)
+                        {
+                            _ui.DisplayUserInfo(user);
+                        }
+                        else
+                        {
+                            Product temp = _stregsystem.GetProductByID(int.Parse(commandArr[i]));
+                            _stregsystem.BuyProduct(user, temp);
+                        }
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw;
+                }
+            }
         }
 
     }

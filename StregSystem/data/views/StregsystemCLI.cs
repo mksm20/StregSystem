@@ -58,6 +58,7 @@ namespace StregSystem.data.views
         }
         public void Close()
         {
+            stregsystem.UpdateUsers();
             Environment.Exit(0);
         }
         public void DisplayInsufficientCash(User user, Product product)
