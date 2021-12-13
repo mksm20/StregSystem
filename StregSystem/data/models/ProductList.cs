@@ -41,6 +41,10 @@ namespace StregSystem.data.models
                 }
             }
         }
+        public void SaveProducts()
+        {
+
+        }
 
         public IEnumerator<Product> GetEnumerator()
         {
