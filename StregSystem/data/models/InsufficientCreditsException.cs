@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace StregSystem.data.models
 {   
     [Serializable]
-    class InsufficientCreditsException : Exception
+    public class InsufficientCreditsException : Exception
     {
         public InsufficientCreditsException() { }
         public InsufficientCreditsException(string message)

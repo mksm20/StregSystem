@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    class UserList
+    public class UserList
     {
         public List<User> users = new List<User>(); 
         public void OnNewUser(object source, UserArgs e)

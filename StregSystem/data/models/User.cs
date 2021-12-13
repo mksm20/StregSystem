@@ -58,6 +58,7 @@ namespace StregSystem.data.models
                     //Processing row
                     id = parser.ReadLine();
                 }
+
             }
             if(id == "0")
             {

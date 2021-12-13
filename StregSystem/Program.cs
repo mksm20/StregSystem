@@ -17,6 +17,7 @@ namespace StregSystem
             Product product = new Product(7,"Monster",12.5,true,false);
             SeasonalProduct seasonal = new SeasonalProduct(product, "2020-10-12", "2021-05-05");
             BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product);
+            
             Console.WriteLine(transaction.ID);
         }
     }

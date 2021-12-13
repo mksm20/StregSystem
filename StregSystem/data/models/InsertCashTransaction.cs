@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    class InsertCashTransaction : Transaction
+    public class InsertCashTransaction : Transaction
     {
         public InsertCashTransaction(User user, DateTime timeStamp, double amount) 
             : base(user, timeStamp, amount)

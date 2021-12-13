@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    class BuyTransaction : Transaction
+    public class BuyTransaction : Transaction
     {
         public BuyTransaction(User user, DateTime timeStamp, double amount ,Product product)
             : base(user, timeStamp, amount)

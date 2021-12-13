@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    abstract class Transaction
+    public abstract class Transaction
     {
         public Transaction(User user, DateTime timeStamp, double amount)
         {

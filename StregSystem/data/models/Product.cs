@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    public class Product : IToString
+    public class Product
     {
         public Product(int iD, string name, double price, bool active, bool canBeBoughtOnCredit)
         {
@@ -28,9 +28,9 @@ namespace StregSystem.data.models
         {
             if (NewProduct != null) NewProduct(this, new ProductArgs() { product = this });
         }
-        public string ToString(Product product)
+        public override string ToString()
         {
-            string ObjparamsString = $"ID: {product.ID} Name: {product.Name} Price: {product.Price} \n";
+            string ObjparamsString = $"ID: {this.ID} Name: {this.Name} Price: {this.Price} \n";
             return ObjparamsString;
         }
         public void priceChange(double newPrice)

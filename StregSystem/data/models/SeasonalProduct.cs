@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    class SeasonalProduct : Product
+    public class SeasonalProduct : Product
     {
         public SeasonalProduct(Product product, string seasonStartDate, string seasonEndDate)
             : base(product.ID, product.Name, product.Price, product.CanBeBoughtOnCredit, product.Active)
