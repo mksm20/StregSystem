@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    class BuyTransaction : Transaction
+    public class BuyTransaction : Transaction
     {
+
         public BuyTransaction(User user, DateTime timeStamp, double amount ,Product product)
             : base(user, timeStamp, amount)
         {
@@ -44,7 +46,6 @@ namespace StregSystem.data.models
                 }
             }
             id = data.Split(',');
-            Console.WriteLine(id);
             if (id[0] == "0")
             {
                 ID = 1;

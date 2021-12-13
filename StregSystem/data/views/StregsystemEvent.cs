@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystem.data.Controller
+namespace StregSystem.data.views
 {
-    class Class1
+    public class StregsystemEvent : EventArgs
     {
+
     }
 }
