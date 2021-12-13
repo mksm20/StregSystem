@@ -161,8 +161,8 @@ namespace StregSystem.data.models
         }
         public int CompareTo(User that)
         {
-            if (this.ID < that.ID) return -1;
-            if (this.ID == that.ID) return 0;
+            if (this.GetHashCode() < that.GetHashCode()) return -1;
+            if (this.GetHashCode() == that.GetHashCode()) return 0;
             return 1;
         }
 

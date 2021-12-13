@@ -9,6 +9,7 @@ namespace StregSystem.data.views
 {
     public interface IStregsystemCLI
     {
+        Stregsystem stregsystem { get; }
         void DisplayUserNotFound(string username);
         void DisplayProductNotFound(string product);
         void DisplayUserInfo(User user);

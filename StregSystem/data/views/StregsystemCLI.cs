@@ -7,9 +7,13 @@ using StregSystem.data.models;
 
 namespace StregSystem.data.views
 {
-    class StregsystemCLI 
+    public class StregsystemCLI : IStregsystemCLI
     {
-        private Stregsystem stregsystem = new Stregsystem();
+        public StregsystemCLI(Stregsystem stregsystem)
+        {
+            this.stregsystem = stregsystem;
+        }
+        public Stregsystem stregsystem { get; private set; }
         private bool _isStarted = true;
         private string _command;
         public void DisplayUserNotFound(string username)
@@ -35,14 +39,11 @@ namespace StregSystem.data.views
         {
             Console.WriteLine($"{adminCommand}: is not a recognized commmand");
         }
-        public void DisplayUserBuysProduct(int? count, BuyTransaction transaction)
+        public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            if (count == null)
-            {
-                Console.WriteLine($"{transaction.User.UserName} has bought {transaction.product.ToString()} \n");
-            }
+            Console.WriteLine($"{transaction.User.UserName} has bought {transaction.product.ToString()} \n");
         }
-        public void DisplayUserBuysProduct(int count, BuyTransaction transaction, ProductList products)
+        public void DisplayUserBuysProduct(int count, BuyTransaction transaction)
         {
             for (int i = 0; i < count; i++)
             {

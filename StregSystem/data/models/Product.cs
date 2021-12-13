@@ -35,7 +35,7 @@ namespace StregSystem.data.models
         }
         public void priceChange(double newPrice)
         {        
-                if (newPrice > 0)
+                if (newPrice >= 0)
                 {
                     this.Price = newPrice;
                 }

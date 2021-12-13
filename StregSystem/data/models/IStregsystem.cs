@@ -9,7 +9,9 @@ namespace StregSystem.data.models
 {
     interface IStregsystem
     {
+            UserList Users { get; set; } 
             IEnumerable<Product> ActiveProducts { get; }
+            void InitiateStregsystem();
             InsertCashTransaction AddCreditsToAccount(User user, double amount);
             BuyTransaction BuyProduct(User user, Product product);
             Product GetProductByID(int id);
@@ -17,5 +19,6 @@ namespace StregSystem.data.models
             User GetUsers(Func<User, bool> predicate);
             User GetUserByUsername(string username);
             void OnLowBalance(object source, UserArgs e);
+            void GetActiveProducts();
     }
 }
