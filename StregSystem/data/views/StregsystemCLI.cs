@@ -16,6 +16,12 @@ namespace StregSystem.data.views
         public Stregsystem stregsystem { get; private set; }
         private bool _isStarted = true;
         private string _command;
+        public delegate void CommandParseEventHandler(object source, CommandArgs args);
+        public event CommandParseEventHandler CommandParse;
+        protected virtual void OnCommandParse(string command)
+        {
+            if (CommandParse != null) CommandParse(this, new CommandArgs() { Command = command });
+        }
         public void DisplayUserNotFound(string username)
         {
             Console.WriteLine($"{username} does not exist \n");
@@ -74,7 +80,7 @@ namespace StregSystem.data.views
                 _command = Console.ReadLine();
                 if(_command != null)
                 {
-                    
+                    OnCommandParse(_command);
                 }
             }
         }

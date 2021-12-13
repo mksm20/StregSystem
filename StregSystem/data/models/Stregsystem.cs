@@ -19,6 +19,37 @@ namespace StregSystem.data.models
         public UserList Users { get; set; }
         public ProductList Products { get; set; }
         public IEnumerable<Product> ActiveProducts { get; private set; }
+        public void CreditOnOff(int id)
+        {
+            foreach (Product product in Products.Products)
+            {
+                if (product.CompareTo(id) == 0)
+                {
+                    product.CanBeBoughtOnCredit = product.CanBeBoughtOnCredit == true ? false : true;
+                }
+            }
+        }
+        public void ActivateProduct(int id)
+        {
+            foreach(Product product in Products.Products)
+            {
+                if (product.CompareTo(id) == 0)
+                {
+                    product.Active = true;
+                }
+            }
+        }
+        public void DeactivateProduct(int id)
+        {
+            foreach (Product product in Products.Products)
+            {
+                if (product.CompareTo(id) == 0)
+                {
+                    product.Active = false;
+                }
+            }
+
+        }
         public void InitiateStregsystem()
         {
             foreach (User user in Users.users)
@@ -45,11 +76,19 @@ namespace StregSystem.data.models
             user.transactions.Add(transaction);
             return transaction;
         }
-        public InsertCashTransaction AddCreditsToAccount(User user, double amount)
+        public InsertCashTransaction AddCreditsToAccount(string username, double amount)
         {
-            InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount);
-            user.transactions.Add(transaction);
-            return transaction;
+
+            foreach(User user in Users.users)
+            {
+                if(user.UserName == username)
+                {
+                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount);
+                    user.transactions.Add(transaction);
+                    return transaction;
+                }
+            }
+            throw new IndexOutOfRangeException("User does not exist");
         }
         public Product GetProductByID(int ID)
         {

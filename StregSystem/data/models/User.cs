@@ -18,6 +18,15 @@ namespace StregSystem.data.models
         private string _email;
         private double _balance;
 
+        public User(string firstName, string userName, string lastName, string email)
+        {
+            setUserName(userName);
+            setName(firstName, lastName);
+            setEmail(email);
+            setID();
+        }
+
+        [JsonConstructor]
         public User(int? ID, string firstName, string lastName, string userName, string email, double balance)
         {
             setUserName(userName);
@@ -32,7 +41,6 @@ namespace StregSystem.data.models
             {
                 this.ID = (int)ID;
             }
-            OnNewUser();
         }
 
         public int ID { get; set; }
@@ -42,14 +50,9 @@ namespace StregSystem.data.models
         public string Email { get; private set; }
         public double Balance { get; private set; }
         public List<Transaction> transactions = new List<Transaction>();
-        public delegate void NewUserAddedEventHandler(object source, UserArgs args);
         public delegate void BalanceLowEventHandler(object source, UserArgs args);
         public event BalanceLowEventHandler LowBalance;
-        public event NewUserAddedEventHandler NewUser;
-        protected virtual void OnNewUser()
-        {
-            if (NewUser != null) NewUser(this, new UserArgs() { user = this });
-        }
+        
         protected virtual void OnLowBalance()
         {
             if (LowBalance != null) LowBalance(this, new UserArgs() { user = this });

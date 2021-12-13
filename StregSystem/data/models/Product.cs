@@ -44,10 +44,10 @@ namespace StregSystem.data.models
                     throw new ArgumentException("Price cannot be less than 0");
                 }
         }
-        public int CompareTo(Product that)
+        public int CompareTo(int ID)
         {
-            if (this.ID < that.ID) return -1;
-            if (this.ID == that.ID) return 0;
+            if (this.ID < ID) return -1;
+            if (this.ID == ID) return 0;
             return 1;
         }
     }
