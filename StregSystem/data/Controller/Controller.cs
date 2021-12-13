@@ -42,6 +42,7 @@ namespace StregSystem.data.Controller
                 switch (commandArr[0])
                 {
                     case ":quit":
+                    case ":q":
                         _ui.Close();
                         break;
                     case ":activate":
@@ -75,14 +76,28 @@ namespace StregSystem.data.Controller
                         }
                         else
                         {
-                            Product temp = _stregsystem.GetProductByID(int.Parse(commandArr[i]));
-                            _stregsystem.BuyProduct(user, temp);
+                            try
+                            {
+                                Product temp = _stregsystem.GetProductByID(int.Parse(commandArr[i]));
+                                try
+                                {
+                                    _stregsystem.BuyProduct(user, temp);
+                                }
+                                catch (InsufficientCreditsException)
+                                {
+                                    _ui.DisplayInsufficientCash(user, temp);
+                                }
+                            }
+                            catch (IndexOutOfRangeException) 
+                            {
+                                _ui.DisplayProductNotFound(commandArr[i]);
+                            }
                         }
                     }
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    throw;
+                    _ui.DisplayUserNotFound(commandArr[0]);
                 }
             }
         }
