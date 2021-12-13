@@ -2,37 +2,46 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic.FileIO;
+using Newtonsoft.Json;
 
 namespace StregSystem.data.models
 {
     public class User : IComparable<User>
     {
-        private int _ID;
         private List<string> _firstName = new List<string>();
         private string _lastName;
         private string _userName;
         private string _email;
         private double _balance;
 
-        public User(List<string> Name, string userName, string email)
+        public User(int? ID, string firstName, string lastName, string userName, string email, double balance)
         {
             setUserName(userName);
-            setName(Name);
+            setName(firstName, lastName);
             setEmail(email);
-            setID();
+            setIncBalance(balance);
+            if (ID == null)
+            {
+                setID();
+            }
+            else
+            {
+                this.ID = (int)ID;
+            }
             OnNewUser();
         }
 
-        public int ID { get; private set; }
-        public List<string> FirstName { get; private set; }
+        public int ID { get; set; }
+        public string FirstName { get; private set; }
         public string UserName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public double Balance { get; private set; }
+        public List<Transaction> transactions = new List<Transaction>();
         public delegate void NewUserAddedEventHandler(object source, UserArgs args);
         public delegate void BalanceLowEventHandler(object source, UserArgs args);
         public event BalanceLowEventHandler LowBalance;
@@ -47,31 +56,26 @@ namespace StregSystem.data.models
         }
         private void setID()
         {
-            string path = "../../../files/userID.csv";
-            string id = "0";
-            using (TextFieldParser parser = new TextFieldParser(path))
+            List<User> temp = new List<User>();
+            string path = "../../../files/users.Json";
+            using (StreamReader r = new StreamReader(path))
             {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
-                while (!parser.EndOfData)
+                string json = r.ReadToEnd();
+                List<User> users = JsonConvert.DeserializeObject<List<User>>(json);
+                temp = users;
+                this.ID = users[^1].ID + 1;
+            }
+            using (StreamWriter w = new StreamWriter(path))
+            {
+                string json = "[";
+                foreach(User user in temp)
                 {
-                    //Processing row
-                    id = parser.ReadLine();
+                    json += System.Text.Json.JsonSerializer.Serialize(user);
+                    json += ",";
                 }
-
-            }
-            if(id == "0")
-            {
-                _ID = 1;
-            }
-            else
-            {
-                int lastID = Int32.Parse(id);
-                _ID = ++lastID;
-            }
-            using (StreamWriter sw = File.AppendText(path))
-            {
-                sw.WriteLine(_ID);
+                json += System.Text.Json.JsonSerializer.Serialize(this);
+                json += "]";
+                w.Write(json);
             }
         } 
         private void setUserName(string UserNameInp)
@@ -99,21 +103,19 @@ namespace StregSystem.data.models
             }
         }
 
-        public void setName(List<String> Name)
+        public void setName(string firstName, string lastName)
         {
             bool HasAName = false;
-            for (int i = 0; i < Name.Count - 1; i++)
-            {
-                if (Name[i] != "" && Regex.IsMatch(Name[i], @"^[a-zA-Z]+$"))
-                {
-                    _firstName.Add(Name[i]);
-                    HasAName = true;
-                }
-            }
+           
             
-            if(Name[^1] != "" && Regex.IsMatch(Name[^1], @"^[a-zA-Z]+$"))
+            if (firstName != null && Regex.IsMatch(firstName, @"^[a-zA-Z]+$"))
             {
-                _lastName = Name[^1];
+                _firstName.Add(firstName);
+                HasAName = true;
+            }
+            if(lastName != null && Regex.IsMatch(lastName, @"^[a-zA-Z]+$"))
+            {
+                _lastName = lastName;
                 LastName = _lastName;
             }
             else
@@ -123,7 +125,7 @@ namespace StregSystem.data.models
             
             if (HasAName)
             {
-                FirstName = _firstName;
+                FirstName = _firstName[0];
             }
             else
             {
@@ -132,17 +134,9 @@ namespace StregSystem.data.models
         }
 
         public void setIncBalance(double IncTransAct)
-        {
-
-                if (IncTransAct > 0)
-                {
-                    _balance += IncTransAct;
-                    Balance = _balance;
-                }
-                else
-                {
-                    throw new ArgumentException("Incoming transaction cannot be less than 0 :");
-                }
+        { 
+            _balance += IncTransAct;
+            Balance = _balance;
         }
         public void setOutBalance(double OutTransAct)
         {
@@ -175,14 +169,13 @@ namespace StregSystem.data.models
         public override bool Equals(object obj)
         {
             return obj is User user &&
-                   _ID == user._ID &&
                    EqualityComparer<List<string>>.Default.Equals(_firstName, user._firstName) &&
                    _lastName == user._lastName &&
                    _userName == user._userName &&
                    _email == user._email &&
                    _balance == user._balance &&
                    ID == user.ID &&
-                   EqualityComparer<List<string>>.Default.Equals(FirstName, user.FirstName) &&
+                   FirstName == user.FirstName &&
                    UserName == user.UserName &&
                    LastName == user.LastName &&
                    Email == user.Email &&
@@ -192,7 +185,6 @@ namespace StregSystem.data.models
         public override int GetHashCode()
         {
             HashCode hash = new HashCode();
-            hash.Add(_ID);
             hash.Add(_firstName);
             hash.Add(_lastName);
             hash.Add(_userName);

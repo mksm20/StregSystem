@@ -19,6 +19,10 @@ namespace StregSystem.data.models
         public IEnumerable<Transaction> GetTransactions(User user, int count)
         {
             var Transactions = new List<Transaction>();
+            for(int i = 0; i < count; i++)
+            {
+                Transactions[i] = user.transactions[^(i + 1)];
+            }
             return Transactions;
         }
         public void OnLowBalance(object source, UserArgs e)
@@ -28,11 +32,13 @@ namespace StregSystem.data.models
         public BuyTransaction BuyProduct(User user,Product product)
         {
             BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product);
+            user.transactions.Add(transaction);
             return transaction;
         }
         public InsertCashTransaction AddCreditsToAccount(User user,double amount)
         {
             InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount);
+            user.transactions.Add(transaction);
             return transaction;
         }
         public Product GetProductByID(int ID)
@@ -62,7 +68,8 @@ namespace StregSystem.data.models
         }
         public User GetUsers(Func<User,bool> Predicate)
         {
-            User users;
+            List<string> navn = new List<string> { "Lars" };
+            User users = new User(null, navn[0],"hans",  "userName23", "bent@lasrt.dk", 3000);
 
             return users;
         } 

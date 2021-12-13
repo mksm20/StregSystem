@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.data.models
 {
-    public class Product
+    public class Product : IComparable<Product>
     {
         public Product(int iD, string name, double price, bool active, bool canBeBoughtOnCredit)
         {
@@ -43,6 +43,12 @@ namespace StregSystem.data.models
                 {
                     throw new ArgumentException("Price cannot be less than 0");
                 }
+        }
+        public int CompareTo(Product that)
+        {
+            if (this.ID < that.ID) return -1;
+            if (this.ID == that.ID) return 0;
+            return 1;
         }
     }
 }

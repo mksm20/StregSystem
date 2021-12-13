@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "76X5UARdXMG/ZDFdC6jCVlztOsVJrOo0w1snvZwlcJFBbZ2oGti6pLUSXEtQ1zAGb3YF6u5VbdLf5lNDjjoDKQ==",
+  "dgSpecHash": "ctuiO0lDxMUFuwPrGjQGAYQyJ4G3GMwDuUo5lfKK3M1o1ZmRS8R9AYGd/STcftekYvlC7QeMdQyhpAxwSJchgQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\StregSystem.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\martin mortensen\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

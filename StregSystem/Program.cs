@@ -9,10 +9,8 @@ namespace StregSystem
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            List<String> name = new List<string>();
-            name.Add("Martin");
-            name.Add("Mortensen");
-            User user = new User(name, "bent21", "martin@gmail.com");
+            List<string> Name = new List<string>{ "Martin", "Mortensen" };
+            User user = new User(null,"Martin","Mortensen", "bent21", "martin@gmail.com", 5000);
             user.setIncBalance(150);
             Product product = new Product(7,"Monster",12.5,true,false);
             SeasonalProduct seasonal = new SeasonalProduct(product, "2020-10-12", "2021-05-05");

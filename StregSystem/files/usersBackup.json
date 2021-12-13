@@ -1,0 +1,42 @@
+[
+  {
+    "ID": 1,
+    "FirstName": ["Nancy"],
+    "Username": "ndavo",
+    "LastName": "Davolio",
+    "Email": "ndavo@sample.stregsystem.dk",
+    "Balance": 400000
+  },
+  {
+    "ID": 2,
+    "FirstName": ["Andrew"],
+    "Username": "afull",
+    "LastName": "Fuller",
+    "Email": "afull@sample.stregsystem.dk",
+    "Balance": 32900
+  },
+  {
+    "ID": 3,
+    "FirstName": ["Janet"],
+    "Username": "jleve",
+    "LastName": "Leverling",
+    "Email": "jleve@sample.stregsystem.dk",
+    "Balance": 5050
+  },
+  {
+    "ID": 4,
+    "FirstName": ["Margaret"],
+    "Username": "mpeac",
+    "LastName": "Peacock",
+    "Email": "mpeac@sample.stregsystem.dk",
+    "Balance": 10000
+  },
+  {
+    "ID": 5,
+    "FirstName": ["Robert"],
+    "Username": "rking",
+    "LastName": "King",
+    "Email": "rking@sample.stregsystem.dk",
+    "Balance": -1000
+  }
+]

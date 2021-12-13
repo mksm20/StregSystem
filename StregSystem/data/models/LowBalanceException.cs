@@ -18,5 +18,3 @@ namespace StregSystem.data.models
         { }
     }
 }
-
-}
