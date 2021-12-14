@@ -78,22 +78,21 @@ namespace StregSystem.data.Controller
             {
                 try
                 {
-                    User user = _stregsystem.GetUserByUsername(commandArr[1]);
-                    List<string> temp = _stregsystem.GetTransactionForUser(user.UserName, 10);
+                    int s;
+                    List<string> temp = _stregsystem.GetTransactionForUser(commandArr[1], 10);
                     _ui.DisplayUserBuysProduct(temp);
                     return;
-
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    _ui.DisplayProductNotFound(commandArr[1] == null? "null" : commandArr[1]);
-                    return;
+                    _ui.DisplayGeneralError("Username was incorrect");
                 }
-                catch (System.FormatException e)
+                catch (System.FormatException)
                 {
-                    _ui.DisplayGeneralError("Your formatting was incorrect");
-                    return;
+                    _ui.DisplayGeneralError("Incorrect formatting");
                 }
+
+            
             }else
             {
                 

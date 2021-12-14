@@ -57,14 +57,9 @@ namespace StregSystem.data.views
         {
             Console.Clear();
             Console.SetCursorPosition(0, 2);
-            for (int i = 0; i < transactionHistory.Count() ; i++)
+            for (int i = 0; i < transactionHistory.Count ; i++)
             {
                 Console.WriteLine(transactionHistory[i]);
-            }
-            string input = Console.ReadLine();
-            if(input != null)
-            {
-                return;
             }
         }
         public void Close()

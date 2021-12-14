@@ -49,18 +49,22 @@ namespace StregSystem.data.models
         public List<string> GetTransactionForUser(string username, int count)
         {
             List<string> transactionsForPrint = new List<string>();
-            string[] temp = File.ReadAllLines("../../../files/transID.csv");
             int j = 0;
-            Console.WriteLine(temp[0]);
-            foreach(string i in temp)
+            using (StreamReader r = new StreamReader("../../../files/transID.csv")) 
             {
-                string[] tok = i.Split(";");
-                Console.WriteLine(tok[0]);
-                if (tok[6].Trim() == username && j < count)
+                
+                while (!r.EndOfStream)
                 {
-                    transactionsForPrint.Add(i);
-                    j++;
+                    string line = r.ReadLine();
+                    string[] tok = line.Split(";");
+                    if (tok[6].Trim() == username.Trim())
+                    {
+                        transactionsForPrint.Add(line);
+                        j++;
+                    }
+                    
                 }
+                transactionsForPrint.RemoveRange(0, transactionsForPrint.Count - 11);               
             }
             return transactionsForPrint;
         }
