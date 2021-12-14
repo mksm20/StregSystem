@@ -30,6 +30,14 @@ namespace StregSystem.data.models
         {
             if (LowBalance != null) LowBalance(this, new UserArgs() { user = e });
         }
+        public void createNewProduct(List<string> product)
+        {
+            int ID = Products.Products[^1].ID;
+            ID++;
+            Product newProduct = new Product(ID, product[0], double.Parse(product[1]), bool.Parse(product[2]), bool.Parse(product[3]));
+            Products.Products.Add(newProduct);
+            GetActiveProducts();
+        }
         public void UpdateUsers()
         {
             using (StreamWriter w = new StreamWriter(_path))
@@ -64,7 +72,7 @@ namespace StregSystem.data.models
                     }
                     
                 }
-                transactionsForPrint.RemoveRange(0, transactionsForPrint.Count - 11);               
+                transactionsForPrint.RemoveRange(0, transactionsForPrint.Count/3);               
             }
             return transactionsForPrint;
         }
@@ -85,7 +93,9 @@ namespace StregSystem.data.models
                 if (product.CompareTo(id) == 0)
                 {
                     product.Active = true;
+                    GetActiveProducts();
                 }
+
             }
         }
         public void DeactivateProduct(int id)
@@ -95,6 +105,7 @@ namespace StregSystem.data.models
                 if (product.CompareTo(id) == 0)
                 {
                     product.Active = false;
+                    GetActiveProducts();
                 }
             }
 
@@ -165,11 +176,11 @@ namespace StregSystem.data.models
             }
             throw new IndexOutOfRangeException("The User does not exist");
         }
-        public User GetUsers(Func<User, bool> Predicate)
+        public List<User> GetUsers(Func<User, bool> predicate)
         {
-            List<string> navn = new List<string> { "Lars" };
-            User users = new User(null, navn[0], "hans", "userName23", "bent@lasrt.dk", 3000);
-            return users;
+
+            List<User> users = Users.users;
+            return users.Where(predicate).ToList();
         }
     }
 }

@@ -49,7 +49,6 @@ namespace StregSystem.data.models
                 }
             }
             id = data.Split(';');
-            Console.WriteLine(id);
             if (id[0] == "0")
             {
                 ID = 1;

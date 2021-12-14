@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace StregSystem.data.models
@@ -21,6 +22,7 @@ namespace StregSystem.data.models
     
         private void addProducts() 
         {
+            const string htmlTagPattern = "<.*?>";
             using (StreamReader r = new StreamReader(_path))
             {
                 r.ReadLine();
@@ -29,13 +31,13 @@ namespace StregSystem.data.models
                     string temp = r.ReadLine();
                     string[] tempArr;
                     tempArr = temp.Split(";");
-                    tempArr[1] = tempArr[1].Replace("<[^>]*>", "");
+                    tempArr[1] = Regex.Replace(tempArr[1], htmlTagPattern, string.Empty);
                     Product toBeAdded = new Product(
                         Int32.Parse(tempArr[0]),
                         tempArr[1],
-                        Double.Parse(tempArr[2])/100,
-                        Int32.Parse(tempArr[3]) != 0 ? true : false,
-                        false
+                        Double.Parse(tempArr[2]),
+                        bool.Parse(tempArr[3]),
+                        bool.Parse(tempArr[4])
                    );
                     Products.Add(toBeAdded);
                 }
@@ -43,7 +45,14 @@ namespace StregSystem.data.models
         }
         public void SaveProducts()
         {
-
+            using (StreamWriter w = new StreamWriter(_path))
+            {
+                foreach(Product product in Products)
+                {
+                    string toWrite = ($"{product.ID};{product.Name};{product.Price};{product.Active};{product.CanBeBoughtOnCredit}");
+                    w.WriteLine(toWrite);
+                }
+            }
         }
 
         public IEnumerator<Product> GetEnumerator()

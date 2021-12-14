@@ -9,13 +9,15 @@ namespace StregSystem.data.views
 {
     public class StregsystemCLI : IStregsystemCLI
     {
-        public StregsystemCLI(Stregsystem stregsystem)
+        public StregsystemCLI(IStregsystem stregsystem)
         {
             this.stregsystem = stregsystem;
         }
-        public Stregsystem stregsystem { get; private set; }
+        public IStregsystem stregsystem { get; }
         private bool _isStarted = true;
         private string _command;
+
+
         public delegate void CommandParseEventHandler(object source, CommandArgs args);
         public event CommandParseEventHandler CommandParse;
         protected virtual void OnCommandParse(string command)
@@ -47,7 +49,7 @@ namespace StregSystem.data.views
         }
         public void DisplayAdminCommandNotFoundMessage(string adminCommand)
         {
-            Console.WriteLine($"{adminCommand}: is not a recognized commmand");
+            Console.WriteLine($"{adminCommand}: is not a recognized command");
         }
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
@@ -62,9 +64,12 @@ namespace StregSystem.data.views
                 Console.WriteLine(transactionHistory[i]);
             }
         }
+
         public void Close()
         {
+            Console.Clear();
             stregsystem.UpdateUsers();
+            stregsystem.Products.SaveProducts();
             Environment.Exit(0);
         }
         public void DisplayInsufficientCash(User user, Product product)
@@ -77,6 +82,9 @@ namespace StregSystem.data.views
         }
         public void PrintProductList()
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, 5);
             Console.WriteLine("Product List: \n");
             foreach (Product product in stregsystem.ActiveProducts)
@@ -97,6 +105,14 @@ namespace StregSystem.data.views
                     PrintProductList();
                     OnCommandParse(_command);
                 }
+            }
+        }
+
+        public void DisplayUsers(List<User> users)
+        {
+            foreach(User user in users)
+            {
+                Console.WriteLine($"{user.UserName} {user.Balance} {user.Email}");
             }
         }
     }

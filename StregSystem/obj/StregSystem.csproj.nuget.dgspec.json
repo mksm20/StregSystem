@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marti\\OneDrive\\Dokumenter\\OOP_Exam\\StregSystem\\StregSystem.csproj": {}
+    "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\StregSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marti\\OneDrive\\Dokumenter\\OOP_Exam\\StregSystem\\StregSystem.csproj": {
+    "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\StregSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marti\\OneDrive\\Dokumenter\\OOP_Exam\\StregSystem\\StregSystem.csproj",
+        "projectUniqueName": "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\StregSystem.csproj",
         "projectName": "StregSystem",
-        "projectPath": "C:\\Users\\marti\\OneDrive\\Dokumenter\\OOP_Exam\\StregSystem\\StregSystem.csproj",
-        "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marti\\OneDrive\\Dokumenter\\OOP_Exam\\StregSystem\\obj\\",
+        "projectPath": "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\StregSystem.csproj",
+        "packagesPath": "C:\\Users\\martin mortensen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\martin mortensen\\Documents\\OOP_Exam\\StregSystem\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\martin mortensen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

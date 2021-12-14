@@ -21,7 +21,7 @@ namespace StregSystem.data.models
         public Product product { get; set; }
         public override void Execute()
         {
-            if (User.Balance > Amount)
+            if (User.Balance > Amount || product.CanBeBoughtOnCredit)
             {
                 User.setOutBalance(Amount);
                 setID();
