@@ -11,18 +11,19 @@ namespace StregSystem.data.models
     public abstract class Transaction
     {
         public Transaction() { }
-        public Transaction(User user, DateTime timeStamp, double amount)
+        public Transaction(User user, DateTime timeStamp, double amount, List<User> users)
         {
-            User = user;
+            User = getUserByUsername(user.UserName, users);
             TimeStamp = timeStamp;
             Amount = amount;
         }
 
         public int ID { get; set; }
-        public int ProductID { get; private set; }
+        public int ProductID { get; set; }
         public User User { get; private set; }
         public DateTime TimeStamp { get; private set; }
         public double Amount { get; private set; }
+        public abstract User getUserByUsername(string userName, List<User> users);
         public abstract override string ToString();
         public abstract void Execute();
         public abstract void setID();

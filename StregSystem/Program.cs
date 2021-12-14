@@ -10,13 +10,10 @@ namespace StregSystem
     {
         static void Main(string[] args)
         {
-            Stregsystem stregsystem = new Stregsystem();
-            StregsystemCLI ui = new StregsystemCLI(stregsystem);
+            IStregsystem stregsystem = new Stregsystem();
+            IStregsystemCLI ui = new StregsystemCLI(stregsystem);
             Controller sc = new Controller(stregsystem, ui);
             ui.Start();
-
         }
     }
 }
-
-// Add collection of products and users hashcodes

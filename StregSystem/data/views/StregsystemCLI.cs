@@ -9,13 +9,15 @@ namespace StregSystem.data.views
 {
     public class StregsystemCLI : IStregsystemCLI
     {
-        public StregsystemCLI(Stregsystem stregsystem)
+        public StregsystemCLI(IStregsystem stregsystem)
         {
             this.stregsystem = stregsystem;
         }
-        public Stregsystem stregsystem { get; private set; }
+        public IStregsystem stregsystem { get; }
         private bool _isStarted = true;
         private string _command;
+
+
         public delegate void CommandParseEventHandler(object source, CommandArgs args);
         public event CommandParseEventHandler CommandParse;
         protected virtual void OnCommandParse(string command)
@@ -37,8 +39,8 @@ namespace StregSystem.data.views
         public void DisplayUserInfo(User user)
         {
             Console.WriteLine(
-                $"username: {user.UserName} \n name: {user.FirstName} {user.LastName} \n" +
-                $"balance: {user.Balance} \n email: {user.Email}"
+                $"Username: {user.UserName} \nName: {user.FirstName} {user.LastName} \n" +
+                $"Balance: {user.Balance} \nEmail: {user.Email}"
                 );
         }
         public void DisplayTooManyArgumentsError(string command)
@@ -47,22 +49,27 @@ namespace StregSystem.data.views
         }
         public void DisplayAdminCommandNotFoundMessage(string adminCommand)
         {
-            Console.WriteLine($"{adminCommand}: is not a recognized commmand");
+            Console.WriteLine($"{adminCommand}: is not a recognized command");
         }
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
             Console.WriteLine($"{transaction.User.UserName} has bought {transaction.product.ToString()} \n");
         }
-        public void DisplayUserBuysProduct(int count, BuyTransaction transaction)
+        public void DisplayUserBuysProduct(List<string> transactionHistory)
         {
-            for (int i = 0; i < count; i++)
+            Console.Clear();
+            Console.SetCursorPosition(0, 2);
+            for (int i = 0; i < transactionHistory.Count ; i++)
             {
-                //Console.WriteLine($"{transaction.User.UserName} has bought {products.Products. [transaction.User.transactions[^(i+1)].ProductID]}");
+                Console.WriteLine(transactionHistory[i]);
             }
         }
+
         public void Close()
         {
+            Console.Clear();
             stregsystem.UpdateUsers();
+            stregsystem.Products.SaveProducts();
             Environment.Exit(0);
         }
         public void DisplayInsufficientCash(User user, Product product)
@@ -75,11 +82,16 @@ namespace StregSystem.data.views
         }
         public void PrintProductList()
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0, 5);
             Console.WriteLine("Product List: \n");
             foreach (Product product in stregsystem.ActiveProducts)
             {
                 Console.WriteLine(product.ToString());
             }
+            Console.SetCursorPosition(0, 0);
         }
         public void Start()
         {
@@ -89,9 +101,18 @@ namespace StregSystem.data.views
                 _command = Console.ReadLine();
                 if(_command != null)
                 {
-                    OnCommandParse(_command);
+                    Console.Clear();
                     PrintProductList();
+                    OnCommandParse(_command);
                 }
+            }
+        }
+
+        public void DisplayUsers(List<User> users)
+        {
+            foreach(User user in users)
+            {
+                Console.WriteLine($"{user.UserName} {user.Balance} {user.Email}");
             }
         }
     }

@@ -150,14 +150,10 @@ namespace StregSystem.data.models
                     OnLowBalance();
                 }
 
-                if (OutTransAct > 0 && OutTransAct <= Balance)
+                if (OutTransAct > 0 )
                 {
                     _balance -= OutTransAct;
                     Balance = _balance;
-                }
-                else
-                {
-                    throw new InsufficientCreditsException("Outgoing transaction cannot be negative or 0 :");
                 }
 
             }

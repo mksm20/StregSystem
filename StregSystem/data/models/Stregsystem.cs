@@ -30,6 +30,14 @@ namespace StregSystem.data.models
         {
             if (LowBalance != null) LowBalance(this, new UserArgs() { user = e });
         }
+        public void createNewProduct(List<string> product)
+        {
+            int ID = Products.Products[^1].ID;
+            ID++;
+            Product newProduct = new Product(ID, product[0], double.Parse(product[1]), bool.Parse(product[2]), bool.Parse(product[3]));
+            Products.Products.Add(newProduct);
+            GetActiveProducts();
+        }
         public void UpdateUsers()
         {
             using (StreamWriter w = new StreamWriter(_path))
@@ -44,6 +52,29 @@ namespace StregSystem.data.models
                 w.Write(json);
             }
 
+        }
+
+        public List<string> GetTransactionForUser(string username, int count)
+        {
+            List<string> transactionsForPrint = new List<string>();
+            int j = 0;
+            using (StreamReader r = new StreamReader("../../../files/transID.csv")) 
+            {
+                
+                while (!r.EndOfStream)
+                {
+                    string line = r.ReadLine();
+                    string[] tok = line.Split(";");
+                    if (tok[6].Trim() == username.Trim())
+                    {
+                        transactionsForPrint.Add(line);
+                        j++;
+                    }
+                    
+                }
+                transactionsForPrint.RemoveRange(0, transactionsForPrint.Count/3);               
+            }
+            return transactionsForPrint;
         }
         public void CreditOnOff(int id)
         {
@@ -62,7 +93,9 @@ namespace StregSystem.data.models
                 if (product.CompareTo(id) == 0)
                 {
                     product.Active = true;
+                    GetActiveProducts();
                 }
+
             }
         }
         public void DeactivateProduct(int id)
@@ -72,6 +105,7 @@ namespace StregSystem.data.models
                 if (product.CompareTo(id) == 0)
                 {
                     product.Active = false;
+                    GetActiveProducts();
                 }
             }
 
@@ -98,7 +132,7 @@ namespace StregSystem.data.models
         }
         public void BuyProduct(User user, Product product)
         {
-            BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product);
+            BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product, Users.users);
             user.buyTransactions.Add(transaction);
             Transactions.Transactions.Add(transaction);
             Transactions.addTransactions();
@@ -110,7 +144,7 @@ namespace StregSystem.data.models
             {
                 if(user.UserName == username)
                 {
-                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount);
+                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount, Users.users);
                     user.transactions.Add(transaction);
                     return transaction;
                 }
@@ -142,11 +176,11 @@ namespace StregSystem.data.models
             }
             throw new IndexOutOfRangeException("The User does not exist");
         }
-        public User GetUsers(Func<User, bool> Predicate)
+        public List<User> GetUsers(Func<User, bool> predicate)
         {
-            List<string> navn = new List<string> { "Lars" };
-            User users = new User(null, navn[0], "hans", "userName23", "bent@lasrt.dk", 3000);
-            return users;
+
+            List<User> users = Users.users;
+            return users.Where(predicate).ToList();
         }
     }
 }
