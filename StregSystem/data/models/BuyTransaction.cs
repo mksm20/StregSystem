@@ -12,8 +12,8 @@ namespace StregSystem.data.models
     public class BuyTransaction : Transaction
     {
 
-        public BuyTransaction(User user, DateTime timeStamp, double amount ,Product product)
-            : base(user, timeStamp, amount)
+        public BuyTransaction(User user, DateTime timeStamp, double amount ,Product product, List<User> users) 
+            : base(user, timeStamp, amount, users)
         {
             this.product = product;
             Execute();
@@ -31,6 +31,14 @@ namespace StregSystem.data.models
                 throw new InsufficientCreditsException();
             }
         }
+        public override User getUserByUsername(string userName, List<User> users)
+        {
+            foreach(User user in users)
+            {
+                if (user.UserName == userName) return user;
+            }
+            throw new IndexOutOfRangeException();
+        }
         public override void setID()
         {
             string path = "../../../files/transID.csv";
@@ -39,13 +47,13 @@ namespace StregSystem.data.models
             using (TextFieldParser parser = new TextFieldParser(path))
             {
                 parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
+                parser.SetDelimiters(";");
                 while (!parser.EndOfData)
                 {
                     data = parser.ReadLine();
                 }
             }
-            id = data.Split(',');
+            id = data.Split(';');
             if (id[0] == "0")
             {
                 ID = 1;
@@ -57,7 +65,7 @@ namespace StregSystem.data.models
             }
             using (StreamWriter sw = File.AppendText(path))
             {
-                sw.WriteLine($"{ID},TransaktionsID, {Amount.ToString().Replace(',', '.')}kr, Produkt Købt {product.Name} ,{TimeStamp}");
+                sw.WriteLine($"{ID}; TransaktionsID; {Amount.ToString()}; Produkt Købt ;{product.Name}; {TimeStamp}; {this.User.UserName}; {this.User.ID};");
             }
         }
         public override string ToString()

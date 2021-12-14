@@ -1,34 +1,15 @@
-1,7,12,5,10-12-2020 00:00:00
-2,TransaktionsID, 12,5kr,10-12-2020 00:00:00
-3,TransaktionsID, 12,5kr,05-12-2021 01:59:09
-4,TransaktionsID, 12.5kr, Produkt Købt Monster ,05-12-2021 02:09:51
-5,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:52:08
-6,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:55:48
-7,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:56:41
-8,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:57:43
-9,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:58:32
-10,TransaktionsID, 12.5kr, Produkt Købt Monster ,13-12-2021 16:59:01
-11,TransaktionsID, 5000kr,13-12-2021 22:47:57
-12,TransaktionsID, 5000kr,13-12-2021 22:51:14
-13,TransaktionsID, 1010kr,13-12-2021 23:18:44
-14,TransaktionsID, 5kr, Produkt Købt Snack ,14-12-2021 00:11:03
-15,TransaktionsID, 5kr, Produkt Købt Snack ,14-12-2021 00:13:21
-16,TransaktionsID, 5kr, Produkt Købt Snack ,14-12-2021 00:14:26
-17,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:18:54
-18,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:33:07
-19,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:33:07
-20,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:33:07
-21,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:33:07
-22,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:40:12
-23,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:42:27
-24,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:46:56
-25,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:50:45
-26,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:54:49
-27,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:54:50
-28,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:54:50
-29,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:54:50
-30,TransaktionsID, 12kr, Produkt Købt <h2>Monster</h2> ,14-12-2021 00:54:50
-31,TransaktionsID, 35kr, Produkt Købt "FLAN Sandwich lørdag frokost" ,14-12-2021 00:54:50
-32,TransaktionsID, 35kr, Produkt Købt "FLAN Sandwich lørdag frokost" ,14-12-2021 00:54:50
-33,TransaktionsID, 35kr, Produkt Købt "FLAN Sandwich lørdag frokost" ,14-12-2021 00:54:50
-34,TransaktionsID, 35kr, Produkt Købt "FLAN Sandwich lørdag frokost" ,14-12-2021 00:54:50
+
+1; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 09:51:51; ndavo; 1;
+2; TransaktionsID; 6,5; Produkt Købt ;Øl(Tuborg/Classic/Carlsberg/Rød); 14-12-2021 09:53:07; rking; 5;
+3;TransaktionsID InsertCash Transaction; 100;kr ;14-12-2021 09:55:53; rking; 5
+4;TransaktionsID InsertCash Transaction; 100;kr ;14-12-2021 09:57:49; rking; 5
+5; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 10:46:34; ndavo; 1;
+6; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:19:00; ndavo; 1;
+7; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:19:05; ndavo; 1;
+8; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:19:10; ndavo; 1;
+9; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:20:43; ndavo; 1;
+10; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:29:33; ndavo; 1;
+11; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:29:36; ndavo; 1;
+12; TransaktionsID; 12; Produkt Købt ;<h2>Monster</h2>; 14-12-2021 11:29:40; ndavo; 1;
+13; TransaktionsID; 12; Produkt Købt ;"½L vand & kildevand excl. pant"; 14-12-2021 11:29:44; ndavo; 1;
+14; TransaktionsID; 10; Produkt Købt ;"Øl(f.eks. Thy, Guld, 47, T-FF)"; 14-12-2021 11:29:47; ndavo; 1;

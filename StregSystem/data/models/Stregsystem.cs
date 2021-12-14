@@ -45,6 +45,25 @@ namespace StregSystem.data.models
             }
 
         }
+
+        public List<string> GetTransactionForUser(string username, int count)
+        {
+            List<string> transactionsForPrint = new List<string>();
+            string[] temp = File.ReadAllLines("../../../files/transID.csv");
+            int j = 0;
+            Console.WriteLine(temp[0]);
+            foreach(string i in temp)
+            {
+                string[] tok = i.Split(";");
+                Console.WriteLine(tok[0]);
+                if (tok[6].Trim() == username && j < count)
+                {
+                    transactionsForPrint.Add(i);
+                    j++;
+                }
+            }
+            return transactionsForPrint;
+        }
         public void CreditOnOff(int id)
         {
             foreach (Product product in Products.Products)
@@ -98,7 +117,7 @@ namespace StregSystem.data.models
         }
         public void BuyProduct(User user, Product product)
         {
-            BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product);
+            BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product, Users.users);
             user.buyTransactions.Add(transaction);
             Transactions.Transactions.Add(transaction);
             Transactions.addTransactions();
@@ -110,7 +129,7 @@ namespace StregSystem.data.models
             {
                 if(user.UserName == username)
                 {
-                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount);
+                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount, Users.users);
                     user.transactions.Add(transaction);
                     return transaction;
                 }

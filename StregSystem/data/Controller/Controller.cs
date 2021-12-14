@@ -44,29 +44,57 @@ namespace StregSystem.data.Controller
             string[] commandArr = command.Split(" ");
             if (commandArr[0].StartsWith(":"))
             {
-                switch (commandArr[0])
+                try
                 {
-                    case ":quit":
-                    case ":q":
-                        _ui.Close();
-                        break;
-                    case ":activate":
-                        _stregsystem.ActivateProduct(int.Parse(commandArr[1]));
-                        break;
-                    case ":deactivate":
-                        _stregsystem.DeactivateProduct(int.Parse(commandArr[1]));
-                        break;
-                    case ":crediton":
-                    case ":credioff":
-                        _stregsystem.CreditOnOff(int.Parse(commandArr[1]));
-                        break;
-                    case ":addcredits":
-                        _stregsystem.AddCreditsToAccount(commandArr[1], double.Parse(commandArr[2]));
-                        break;
-                    default:
-                        break;
+                    switch (commandArr[0])
+                    {
+                        case ":quit":
+                        case ":q":
+                            _ui.Close();
+                            return;
+                        case ":activate":
+                            _stregsystem.ActivateProduct(int.Parse(commandArr[1]));
+                            return;
+                        case ":deactivate":
+                            _stregsystem.DeactivateProduct(int.Parse(commandArr[1]));
+                            return;
+                        case ":crediton":
+                        case ":credioff":
+                            _stregsystem.CreditOnOff(int.Parse(commandArr[1]));
+                            return;
+                        case ":addcredits":
+                            _stregsystem.AddCreditsToAccount(commandArr[1], double.Parse(commandArr[2]));
+                            return;
+                        default:
+                            _ui.DisplayAdminCommandNotFoundMessage($"Are you sure you entered the correct command? {commandArr[0]}");
+                            return;
+                    }
+                }catch(IndexOutOfRangeException e)
+                {
+                    _ui.DisplayAdminCommandNotFoundMessage($"You have to enter a second command after {commandArr[0]}");
+                    return;
                 }
-            }
+            }else if(commandArr[0] == "transactions")
+            {
+                try
+                {
+                    User user = _stregsystem.GetUserByUsername(commandArr[1]);
+                    List<string> temp = _stregsystem.GetTransactionForUser(user.UserName, 10);
+                    _ui.DisplayUserBuysProduct(temp);
+                    return;
+
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    _ui.DisplayProductNotFound(commandArr[1] == null? "null" : commandArr[1]);
+                    return;
+                }
+                catch (System.FormatException e)
+                {
+                    _ui.DisplayGeneralError("Your formatting was incorrect");
+                    return;
+                }
+            }else
             {
                 
                 try
@@ -90,22 +118,25 @@ namespace StregSystem.data.Controller
                             catch (InsufficientCreditsException)
                             {
                                 _ui.DisplayInsufficientCash(user, temp);
+                                return;
                             }
                        }
                        catch (IndexOutOfRangeException) 
                        {
                            _ui.DisplayProductNotFound(commandArr[i]);
+                            return;
                        }
                        catch (System.FormatException e)
                        {
                             _ui.DisplayGeneralError("Your formatting was incorrect");
+                            return;
                        }
                     }
-                    
                 }
                 catch (IndexOutOfRangeException)
                 {
                     _ui.DisplayUserNotFound(commandArr[0]);
+                    return;
                 }
             }
         }

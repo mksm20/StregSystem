@@ -11,8 +11,8 @@ namespace StregSystem.data.models
 {
     public class InsertCashTransaction : Transaction
     {
-        public InsertCashTransaction(User user, DateTime timeStamp, double amount) 
-            : base(user, timeStamp, amount)
+        public InsertCashTransaction(User user, DateTime timeStamp, double amount, List<User> users) 
+            : base(user, timeStamp, amount, users)
         {
             Execute();
         }
@@ -22,6 +22,18 @@ namespace StregSystem.data.models
             setID();
 
         }
+
+
+        public override User getUserByUsername(string userName, List<User> users)
+        {
+            foreach (User user in users)
+            {
+                if (user.UserName == userName) return user;
+            }
+            throw new IndexOutOfRangeException();
+        }
+   
+
         public override void setID()
         {
             string path = "../../../files/transID.csv";
@@ -30,13 +42,13 @@ namespace StregSystem.data.models
             using (TextFieldParser parser = new TextFieldParser(path))
             {
                 parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
+                parser.SetDelimiters(";");
                 while (!parser.EndOfData)
                 {
                     data = parser.ReadLine();
                 }
             }
-            id = data.Split(',');
+            id = data.Split(';');
             Console.WriteLine(id);
             if (id[0] == "0")
             {
@@ -49,7 +61,7 @@ namespace StregSystem.data.models
             }
             using (StreamWriter sw = File.AppendText(path))
             {
-                sw.WriteLine($"{ID},TransaktionsID, {Amount}kr,{TimeStamp}");
+                sw.WriteLine($"{ID};TransaktionsID; InsertCash Transaction; {Amount};kr ;{TimeStamp};{User.UserName}; {User.ID}");
             }
         }
         public override string ToString()
