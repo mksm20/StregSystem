@@ -46,7 +46,7 @@ namespace StregSystem.data.models
         public string Email { get; private set; }
         public double Balance { get; private set; }
         public List<Transaction> transactions = new List<Transaction>();
-        public List<BuyTransaction> buyTransactions = new List<BuyTransaction>();
+        public List<Transaction> buyTransactions = new List<Transaction>();
         public delegate void BalanceLowEventHandler(object source, UserArgs args);
         public event BalanceLowEventHandler LowBalance;
         
@@ -74,6 +74,7 @@ namespace StregSystem.data.models
                     json += ",";
                 }
                 json += System.Text.Json.JsonSerializer.Serialize(this);
+                json = json.Remove(json.Length - 1, 1);
                 json += "]";
                 w.Write(json);
             }

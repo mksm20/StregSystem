@@ -13,9 +13,9 @@ namespace StregSystem.data.models
         public TransactionList()
         {
             getTransaction();
-            Transactions = new List<BuyTransaction>();
+            Transactions = new List<Transaction>();
         }
-        public List<BuyTransaction> Transactions { get; set; }
+        public List<Transaction> Transactions { get; set; }
         private string _path = "../../../files/Transactions.json";
 
         public void addTransactions()

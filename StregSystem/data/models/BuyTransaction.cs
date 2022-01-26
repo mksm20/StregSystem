@@ -11,17 +11,19 @@ namespace StregSystem.data.models
 {
     public class BuyTransaction : Transaction
     {
-
+        private Product _product;
         public BuyTransaction(User user, DateTime timeStamp, double amount ,Product product, List<User> users) 
             : base(user, timeStamp, amount, users)
         {
-            this.product = product;
+            _product = product;
+            this.ProductID = product.ID;
+            this.ProductName = product.Name;
             Execute();
         }
-        public Product product { get; set; }
+
         public override void Execute()
         {
-            if (User.Balance > Amount || product.CanBeBoughtOnCredit)
+            if (User.Balance > Amount || _product.CanBeBoughtOnCredit)
             {
                 User.setOutBalance(Amount);
                 setID();
@@ -65,7 +67,7 @@ namespace StregSystem.data.models
             }
             using (StreamWriter sw = File.AppendText(path))
             {
-                sw.WriteLine($"{ID}; TransaktionsID; {Amount.ToString()}; Produkt Købt ;{product.Name}; {TimeStamp}; {this.User.UserName}; {this.User.ID};");
+                sw.WriteLine($"{ID}; TransaktionsID; {Amount.ToString()}; Produkt Købt ;{_product.Name}; {TimeStamp}; {this.User.UserName}; {this.User.ID};");
             }
         }
         public override string ToString()

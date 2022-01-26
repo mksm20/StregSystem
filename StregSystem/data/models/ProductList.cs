@@ -10,22 +10,21 @@ using System.Threading.Tasks;
 namespace StregSystem.data.models
 {
 
-   
+
     public class ProductList : IEnumerable<Product>
     {
         public ProductList()
         {
             addProducts();
         }
-        public List<Product> Products = new List<Product>();
+        public List<Product> Products { get; private set; } = new List<Product>();
         private string _path = "../../../files/products.csv";
-    
-        private void addProducts() 
+
+        private void addProducts()
         {
             const string htmlTagPattern = "<.*?>";
             using (StreamReader r = new StreamReader(_path))
             {
-                r.ReadLine();
                 while (!r.EndOfStream)
                 {
                     string temp = r.ReadLine();
@@ -47,7 +46,7 @@ namespace StregSystem.data.models
         {
             using (StreamWriter w = new StreamWriter(_path))
             {
-                foreach(Product product in Products)
+                foreach (Product product in Products)
                 {
                     string toWrite = ($"{product.ID};{product.Name};{product.Price};{product.Active};{product.CanBeBoughtOnCredit}");
                     w.WriteLine(toWrite);

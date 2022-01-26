@@ -9,12 +9,12 @@ namespace StregSystem.data.models
 {
     public interface IStregsystem
     {
-        TransactionList Transactions { get; set; }
-        ProductList Products { get; set; }
-        UserList Users { get; set; } 
+        TransactionList Transactions { get;  }
+        ProductList Products { get;  }
+        UserList Users { get; } 
         IEnumerable<Product> ActiveProducts { get; }
         void InitiateStregsystem();
-        InsertCashTransaction AddCreditsToAccount(string username, double amount);
+        Transaction AddCreditsToAccount(string username, double amount);
         void BuyProduct(User user, Product product);
         Product GetProductByID(int id);
         IEnumerable<Transaction> GetTransactions(User user, int count);

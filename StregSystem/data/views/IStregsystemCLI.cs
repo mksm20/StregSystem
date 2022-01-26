@@ -16,7 +16,7 @@ namespace StregSystem.data.views
         void DisplayUserInfo(User user);
         void DisplayTooManyArgumentsError(string command);
         void DisplayAdminCommandNotFoundMessage(string adminCommand);
-        void DisplayUserBuysProduct(BuyTransaction transaction);
+        void DisplayUserBuysProduct(Transaction transaction);
         void DisplayUserBuysProduct(List<string> transactions);
         void Close();
         void DisplayInsufficientCash(User user, Product product);

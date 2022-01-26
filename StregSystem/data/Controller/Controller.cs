@@ -136,16 +136,21 @@ namespace StregSystem.data.Controller
                                 _ui.DisplayInsufficientCash(user, temp);
                                 return;
                             }
+
                        }
                        catch (IndexOutOfRangeException) 
                        {
                            _ui.DisplayProductNotFound(commandArr[i]);
                             return;
                        }
-                       catch (System.FormatException e)
+                       catch (System.FormatException)
                        {
                             _ui.DisplayGeneralError("Your formatting was incorrect");
                             return;
+                       }
+                       catch (OverflowException)
+                       {
+                           _ui.DisplayGeneralError("Overflow Error");
                        }
                     }
                 }

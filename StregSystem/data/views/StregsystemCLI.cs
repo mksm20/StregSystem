@@ -51,9 +51,9 @@ namespace StregSystem.data.views
         {
             Console.WriteLine($"{adminCommand}: is not a recognized command");
         }
-        public void DisplayUserBuysProduct(BuyTransaction transaction)
+        public void DisplayUserBuysProduct(Transaction transaction)
         {
-            Console.WriteLine($"{transaction.User.UserName} has bought {transaction.product.ToString()} \n");
+            Console.WriteLine($"{transaction.User.UserName} has bought {transaction.ProductName.ToString()} \n");
         }
         public void DisplayUserBuysProduct(List<string> transactionHistory)
         {

@@ -19,9 +19,9 @@ namespace StregSystem.data.models
         }
 
         private string _path = "../../../files/users.Json";
-        public UserList Users { get; set; }
-        public ProductList Products { get; set; }
-        public TransactionList Transactions { get; set; }
+        public UserList Users { get; private set; }
+        public ProductList Products { get; private set; }
+        public TransactionList Transactions { get; private set; }
         public IEnumerable<Product> ActiveProducts { get; private set; }
         public delegate void BalanceLowEventHandler(object source, UserArgs args);
         public event BalanceLowEventHandler LowBalance;
@@ -132,19 +132,19 @@ namespace StregSystem.data.models
         }
         public void BuyProduct(User user, Product product)
         {
-            BuyTransaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product, Users.users);
+            Transaction transaction = new BuyTransaction(user, DateTime.Now, product.Price, product, Users.users);
             user.buyTransactions.Add(transaction);
             Transactions.Transactions.Add(transaction);
             Transactions.addTransactions();
         }
-        public InsertCashTransaction AddCreditsToAccount(string username, double amount)
+        public Transaction AddCreditsToAccount(string username, double amount)
         {
 
             foreach(User user in Users.users)
             {
                 if(user.UserName == username)
                 {
-                    InsertCashTransaction transaction = new InsertCashTransaction(user, DateTime.Now, amount, Users.users);
+                    Transaction transaction = new InsertCashTransaction(user, DateTime.Now, amount, Users.users);
                     user.transactions.Add(transaction);
                     return transaction;
                 }

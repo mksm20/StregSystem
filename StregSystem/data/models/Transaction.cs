@@ -20,6 +20,7 @@ namespace StregSystem.data.models
 
         public int ID { get; set; }
         public int ProductID { get; set; }
+        public string ProductName { get; set; }
         public User User { get; private set; }
         public DateTime TimeStamp { get; private set; }
         public double Amount { get; private set; }
