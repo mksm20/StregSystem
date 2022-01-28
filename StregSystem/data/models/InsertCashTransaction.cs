@@ -34,7 +34,7 @@ namespace StregSystem.data.models
         }
    
 
-        public override void setID()
+        private void setID()
         {
             string path = "../../../files/transID.csv";
             string[] id;

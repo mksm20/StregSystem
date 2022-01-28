@@ -41,7 +41,7 @@ namespace StregSystem.data.models
             }
             throw new IndexOutOfRangeException();
         }
-        public override void setID()
+        private void setID()
         {
             string path = "../../../files/transID.csv";
             string[] id;
@@ -72,7 +72,7 @@ namespace StregSystem.data.models
         }
         public override string ToString()
         {
-            return ($"Indbetaling af {Amount} af {User.UserName} TransActionID {ID}, {TimeStamp}");
+            return ($"Køb af {_product.Name} af {User.UserName} til {_product.Price}, TransActionID {ID}, {TimeStamp}");
         }
     }
 }

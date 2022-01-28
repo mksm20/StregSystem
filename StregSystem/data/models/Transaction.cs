@@ -27,8 +27,6 @@ namespace StregSystem.data.models
         public abstract User getUserByUsername(string userName, List<User> users);
         public abstract override string ToString();
         public abstract void Execute();
-        public abstract void setID();
-
     }
 }
 

@@ -15,8 +15,8 @@ namespace StregSystem.data.models
             SetDates(seasonStartDate, seasonEndDate);
             ShouldBeActive();
         }
-        public DateTime SeasonStarttDate { get; private set; }
-        public DateTime SeasonEndDate { get; private set; }
+        private DateTime SeasonStarttDate;
+        private DateTime SeasonEndDate; 
         private void ShouldBeActive()
         {
             if(DateTime.Now >= SeasonStarttDate && DateTime.Now <= SeasonEndDate)
