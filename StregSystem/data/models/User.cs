@@ -165,34 +165,14 @@ namespace StregSystem.data.models
 
         public override bool Equals(object obj)
         {
-            return obj is User user &&
-                   EqualityComparer<List<string>>.Default.Equals(_firstName, user._firstName) &&
-                   _lastName == user._lastName &&
-                   _userName == user._userName &&
-                   _email == user._email &&
-                   _balance == user._balance &&
-                   ID == user.ID &&
-                   FirstName == user.FirstName &&
-                   UserName == user.UserName &&
-                   LastName == user.LastName &&
-                   Email == user.Email &&
-                   Balance == user.Balance;
+            return this.GetHashCode() == obj.GetHashCode();
         }
 
         public override int GetHashCode()
         {
             HashCode hash = new HashCode();
-            hash.Add(_firstName);
-            hash.Add(_lastName);
             hash.Add(_userName);
-            hash.Add(_email);
-            hash.Add(_balance);
             hash.Add(ID);
-            hash.Add(FirstName);
-            hash.Add(UserName);
-            hash.Add(LastName);
-            hash.Add(Email);
-            hash.Add(Balance);
             return hash.ToHashCode();
         }
     }

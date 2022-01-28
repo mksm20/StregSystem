@@ -20,15 +20,14 @@ namespace StregSystem.data.Controller
         private Dictionary<string, Delegate> adminCommands = new Dictionary<string, Delegate>();
         private IStregsystem _stregsystem;
         private IStregsystemCLI _ui;
-        private delegate void mydel(Type val);
 
         private void initiateController()
         {
             adminCommands.Add(":quit", new Action(_ui.Close));
-            //adminCommands.Add(":activate", new Action<int>(_stregsystem.ActivateProduct));
-            //adminCommands.Add(":deactivate", new Action<int>(_stregsystem.DeactivateProduct));
-            //adminCommands.Add(":crediton", new Action<int>(_stregsystem.CreditOnOff));
-            //adminCommands.Add(":creditoff", new Action<int>(_stregsystem.CreditOnOff));
+            adminCommands.Add(":activate", new Action<int>(_stregsystem.ActivateProduct));
+            adminCommands.Add(":deactivate", new Action<int>(_stregsystem.DeactivateProduct));
+            adminCommands.Add(":crediton", new Action<int>(_stregsystem.CreditOnOff));
+            adminCommands.Add(":creditoff", new Action<int>(_stregsystem.CreditOnOff));
             //adminCommands.Add(":addcredits", new Func<string, double,Transaction>(_stregsystem.AddCreditsToAccount));
         }
         public void OnLowBalance(object source, UserArgs e)
@@ -48,9 +47,10 @@ namespace StregSystem.data.Controller
                 {
                     foreach(var item in adminCommands)
                     {
-                        if(item.Key == commandArr[0])
+                        if(commandArr[0] == ":q" || commandArr[0] == ":quit")
                         {
                             item.Value.DynamicInvoke();
+                            return;
                         }
                     }
                     
@@ -101,7 +101,6 @@ namespace StregSystem.data.Controller
             {
                 try
                 {
-                    int s;
                     List<string> temp = _stregsystem.GetTransactionForUser(commandArr[1], 10);
                     _ui.DisplayUserBuysProduct(temp);
                     return;
